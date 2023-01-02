@@ -27,6 +27,26 @@ def token_required(our_flask_function):
         return our_flask_function(current_user_token, *args, **kwargs)
     return decorated
 
+def get_token():
+
+    token = None
+
+    if 'x-access-token' in request.headers:
+        token = request.headers['x-access-token'].split(' ')[1]
+    if not token:
+        return jsonify({'message': 'Token is missing.'}), 401
+
+    try:
+        current_user_token = User.query.filter_by(token = token).first()
+        print(token)
+        print(current_user_token)
+    except:
+        owner=User.query.filter_by(token=token).first()
+
+        if token != owner.token and secrets.compare_digest(token, owner.token):
+            return jsonify({'message': 'Token is invalid'})
+    return str(current_user_token.token)
+
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):

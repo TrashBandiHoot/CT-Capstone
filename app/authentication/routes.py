@@ -65,26 +65,3 @@ def logout():
     logout_user()
     return redirect(url_for('site.home'))
 
-@auth.route('/addprofile', methods = ['GET', 'POST'])
-def addprofile():
-    form = UserProfileForm()
-    try:
-        if request.method == 'POST' and form.validate_on_submit():
-            display_name = form.display_name
-            profession = form.profession
-            phone_number = form.phone_number
-            location = form.location
-            hobbies = form.hobbies
-
-            profile = Profile(display_name=display_name, profession=profession, phone_number=phone_number, location=location, hobbies=hobbies)
-
-            db.session.add(profile)
-            db.session.commit()
-
-
-            flash(f'You have successfully changed your profile.')
-            return redirect(url_for('site.profile'))
-    except:
-        raise Exception('Invalid form data')
-    
-    return render_template('addprofile.html', form=form)
