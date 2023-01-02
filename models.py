@@ -56,42 +56,57 @@ class Profile(db.Model):
     display_name = db.Column(db.String, nullable = False)
     profession = db.Column(db.String, nullable = False)
     phone_number = db.Column(db.String, nullable = False)
+    location = db.Column(db.String, nullable = False)
+    hobbies = db.Column(db.String, nullable = False)
     user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self, display_name, profession, phone_number, user_token):
+    def __init__(self, display_name, profession, phone_number, location, hobbies, user_token):
         self.id = self.set_id()
         self.display_name = display_name
         self.profession = profession
         self.phone_number = phone_number
+        self.location = location
+        self.hobbies = hobbies
         self.user_token = user_token
 
     def set_id(self):
         return (secrets.token_urlsafe())
 
 
-class Coffee(db.Model):
-    id = db.Column(db.String, primary_key = True)
-    name = db.Column(db.String(150), nullable = False)
-    cream = db.Column(db.String, default = False)
-    added_flavor = db.Column(db.String(150), nullable = True)
-    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
-
-    def __init__(self, name, cream, added_flavor, user_token, id=''):
-        self.id = self.set_id()
-        self.name = name
-        self.cream = cream
-        self.added_flavor = added_flavor
-        self.user_token = user_token
-
-    def __repr__(self):
-        return f'The following coffee has been added to the inventory: {self.name}'
-
-    def set_id(self):
-        return (secrets.token_urlsafe())
-
-class CoffeeSchema(ma.Schema):
+class ProfileSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'name', 'cream', 'added_flavor']
+        fields = ['display_name', 'profession', 'phone_number', 'location', 'hobbies']
 
-coffee_schema = CoffeeSchema()
-coffees_schema = CoffeeSchema(many = True)
+profile_schema = ProfileSchema()
+profile_schemas = ProfileSchema(many = True)
+
+
+
+
+
+# class Coffee(db.Model):
+#     id = db.Column(db.String, primary_key = True)
+#     name = db.Column(db.String(150), nullable = False)
+#     cream = db.Column(db.String, default = False)
+#     added_flavor = db.Column(db.String(150), nullable = True)
+#     user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
+
+#     def __init__(self, name, cream, added_flavor, user_token, id=''):
+#         self.id = self.set_id()
+#         self.name = name
+#         self.cream = cream
+#         self.added_flavor = added_flavor
+#         self.user_token = user_token
+
+#     def __repr__(self):
+#         return f'The following coffee has been added to the inventory: {self.name}'
+
+#     def set_id(self):
+#         return (secrets.token_urlsafe())
+
+# class CoffeeSchema(ma.Schema):
+#     class Meta:
+#         fields = ['id', 'name', 'cream', 'added_flavor']
+
+# coffee_schema = CoffeeSchema()
+# coffees_schema = CoffeeSchema(many = True)

@@ -1,5 +1,5 @@
-from forms import UserSignupForm, UserLoginForm
-from models import User, db, check_password_hash
+from forms import UserSignupForm, UserLoginForm, UserProfileForm
+from models import User, Profile, db, check_password_hash
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
 # imports for flask login 
@@ -7,10 +7,10 @@ from flask_login import login_user, logout_user, LoginManager, current_user, log
 
 auth = Blueprint('auth', __name__, template_folder='auth_templates')
 
+
 @auth.route('/signup', methods = ['GET', 'POST'])
 def signup():
     form = UserSignupForm()
-    print("hello")
     try:
         if request.method == 'POST' and form.validate_on_submit():
             first = form.first.data
@@ -64,3 +64,27 @@ def signin():
 def logout():
     logout_user()
     return redirect(url_for('site.home'))
+
+@auth.route('/addprofile', methods = ['GET', 'POST'])
+def addprofile():
+    form = UserProfileForm()
+    try:
+        if request.method == 'POST' and form.validate_on_submit():
+            display_name = form.display_name
+            profession = form.profession
+            phone_number = form.phone_number
+            location = form.location
+            hobbies = form.hobbies
+
+            profile = Profile(display_name=display_name, profession=profession, phone_number=phone_number, location=location, hobbies=hobbies)
+
+            db.session.add(profile)
+            db.session.commit()
+
+
+            flash(f'You have successfully changed your profile.')
+            return redirect(url_for('site.profile'))
+    except:
+        raise Exception('Invalid form data')
+    
+    return render_template('addprofile.html', form=form)

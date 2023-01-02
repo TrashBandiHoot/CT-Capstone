@@ -16,5 +16,9 @@ class UserLoginForm(FlaskForm):
     submit_button = SubmitField()
 
 class UserProfileForm(FlaskForm):
-    nickname = StringField('Nickname')
-    
+    display_name = StringField('Display Name', validators = [DataRequired()])
+    profession = StringField('Profession', validators = [DataRequired()])
+    phone_number = StringField('Phone Number', validators = [DataRequired()])
+    location = StringField('Location', validators = [DataRequired()])
+    hobbies = StringField('Hobbies', validators = [DataRequired()])
+    submit_button = SubmitField()
