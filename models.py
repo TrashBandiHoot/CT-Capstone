@@ -14,8 +14,8 @@ ma = Marshmallow()
 db = SQLAlchemy()
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(user_token):
+    return User.query.get(user_token)
 
 
 class User(db.Model, UserMixin):
@@ -58,16 +58,14 @@ class Profile(db.Model):
     phone_number = db.Column(db.String, nullable = False)
     location = db.Column(db.String, nullable = False)
     hobbies = db.Column(db.String, nullable = False)
-    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self, display_name, profession, phone_number, location, hobbies, user_token):
+    def __init__(self, display_name, profession, phone_number, location, hobbies):
         self.id = self.set_id()
         self.display_name = display_name
         self.profession = profession
         self.phone_number = phone_number
         self.location = location
         self.hobbies = hobbies
-        self.user_token = user_token
 
     def set_id(self):
         return (secrets.token_urlsafe())

@@ -1,4 +1,4 @@
-from forms import UserSignupForm, UserLoginForm, UserProfileForm
+from forms import UserSignupForm, UserLoginForm
 from models import User, Profile, db, check_password_hash
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
@@ -64,4 +64,3 @@ def signin():
 def logout():
     logout_user()
     return redirect(url_for('site.home'))
-
