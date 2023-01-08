@@ -45,11 +45,11 @@ def get_profile():
     
 
 # Updating
-@api.route('/profile/update', methods = ['GET', 'PUT'])
+@api.route('/profile/update', methods = ['GET', 'POST', 'PUT'])
 def update_profile():
     form = UserProfileForm()
     try:
-        if request.method == 'PUT' and form.validate_on_submit():
+        if form.validate_on_submit():
             profile = Profile.query.get('21JQeuJZSUXxgpCwlzVCkEDPg-59QAri_M2ekHTmq2Q')
             profile.display_name = form.display_name.data
             profile.profession = form.profession.data
@@ -65,7 +65,7 @@ def update_profile():
             return render_template('profile.html')
     except:
         raise Exception('Invalid form data: Please check your form')
-    return redirect(url_for('profile.html'))
+    return render_template('updateprofile.html', form=form)
 
 # Delete
 @api.route('/profile/delete', methods = ['DELETE'])
@@ -74,8 +74,7 @@ def delete_profile():
     profile = Profile.query.get('21JQeuJZSUXxgpCwlzVCkEDPg-59QAri_M2ekHTmq2Q')
     db.session.delete(profile)
     db.session.commit()
-    response = profile_schema.dump(profile)
-    return jsonify(response)
+    return redirect(url_for('profile.html'))
 
 
 

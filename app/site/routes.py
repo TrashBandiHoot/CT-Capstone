@@ -36,7 +36,7 @@ def profile():
     return render_template('profile.html', quote=quote, author=author, display_name=display_name, profession=profession, phone_number=phone_number, location=location, hobbies=hobbies)
 
 
-@site.route('/profile/update', methods = ['GET', 'POST'])
-def updateprofile():
-    form = UserProfileForm()
-    return render_template('updateprofile.html', form=form)
+# @site.route('/profile/update', methods = ['GET', 'POST'])
+# def updateprofile():
+#     form = UserProfileForm()
+#     return render_template('updateprofile.html', form=form)
