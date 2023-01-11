@@ -1,15 +1,12 @@
-from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, session
 from helpers import token_required
-from models import db, Profile, User, profile_schema, profile_schemas
+from models import db, Profile, profile_schema, profile_schemas
 from forms import UserProfileForm
-
+from flask_login import current_user
+import json
 
 api = Blueprint('api',__name__, url_prefix='/api')
 
-
-@api.route('/getdata')
-def getdata():
-    return {'foo' : 'bar'}
 
 
 @api.route('/addprofile', methods = ['GET', 'POST'])
@@ -22,9 +19,10 @@ def add_profile():
             phone_number = form.phone_number.data
             location = form.location.data
             hobbies = form.hobbies.data
+            user_token = current_user.token
             print(phone_number, location)
 
-            profile = Profile(display_name=display_name, profession=profession, phone_number=phone_number, location = location, hobbies = hobbies)
+            profile = Profile(display_name=display_name, profession=profession, phone_number=phone_number, location=location, hobbies=hobbies, user_token=user_token)
 
             db.session.add(profile)
             db.session.commit()
@@ -37,9 +35,13 @@ def add_profile():
     return render_template('addprofile.html', form=form)
 
 
-@api.route('/profile/get', methods = ['GET'])
-def get_profile():
-    profile_details = Profile.query.get('21JQeuJZSUXxgpCwlzVCkEDPg-59QAri_M2ekHTmq2Q')
+@api.route('/profile/get/<token>', methods = ['GET'])
+def get_profile(token):
+    print(token, 'here')
+    profile = Profile.query.filter_by(user_token = token).first().__dict__
+    print(profile)
+    profile_id = profile['id']
+    profile_details = Profile.query.filter_by(id = profile_id).first()
     response = profile_schema.dump(profile_details)
     return jsonify(response)
     
@@ -67,14 +69,11 @@ def update_profile():
         raise Exception('Invalid form data: Please check your form')
     return render_template('updateprofile.html', form=form)
 
-# Delete
-@api.route('/profile/delete', methods = ['DELETE'])
-@token_required
-def delete_profile():
-    profile = Profile.query.get('21JQeuJZSUXxgpCwlzVCkEDPg-59QAri_M2ekHTmq2Q')
-    db.session.delete(profile)
-    db.session.commit()
-    return redirect(url_for('profile.html'))
+
+
+@api.route('/bookshelf', methods = ['GET'])
+def bookeshelf():
+    GOOGLE_API_KEY = 'AIzaSyCppHP28ImIhpv1NyWME0u_78XkhNKp2iM'
 
 
 

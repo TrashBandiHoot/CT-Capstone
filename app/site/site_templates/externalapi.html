@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="p-5" style="min-height: 80vh; background-color: #303C40;">
+<div class="container">
+  <div class="row">
+    <div class="p-5" style="background-color: rgba(255, 255, 255, 0.2)">
+      <h1 class="display-1 text-center">Welcome to your bookshelf</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="p-5" style="background-color: rgba(255, 255, 255, 0.2)">
+
+        <div class="container-fluid">
+
+            <div class="row" id='search'>
+              <input id='searchbar' class="form-control" placeholder="Search Google Books by Title" type="text"></input>
+              <button class = "btn" id='enter'>Enter</button>
+            </div>
+      
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1" id="book1">
+                </div>
+                <div class="col-md-4 col-md-offset-2" id="book2">
+                </div>
+            </div>    
+            <div class="row">          
+                <div class="col-md-4 col-md-offset-1" id="book3">
+                </div>
+                <div class="col-md-4 col-md-offset-2" id="book4">
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1" id="book5">
+                </div>
+                <div class="col-md-4 col-md-offset-2" id="book6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1" id="book7">
+                </div>
+                <div class="col-md-4 col-md-offset-2" id="book8">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1" id="book9">
+                </div>
+                <div class="col-md-4 col-md-offset-2" id="book10">
+                </div>
+            </div>            
+      
+          </div>
+      
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+</section>
+
+{% endblock %}

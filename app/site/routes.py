@@ -2,6 +2,8 @@ from flask import Flask, request, Blueprint, render_template
 import urllib.request, json
 import psycopg2
 from forms import UserProfileForm
+from flask_login import current_user
+from models import db, User, Profile, profile_schema
 
 
 site = Blueprint('site', __name__, template_folder = 'site_templates')
@@ -9,6 +11,10 @@ site = Blueprint('site', __name__, template_folder = 'site_templates')
 @site.route('/')
 def home():
     return render_template('index.html')
+
+@site.route('/eapi')
+def eapi():
+    return render_template('externalapi.html')
 
 # Pull data from local api and third party api to display on profile page
 
@@ -22,7 +28,12 @@ def profile():
     quote = dict['content']
     author = dict['author']
 
-    prof_url = 'http://127.0.0.1:5000/api/profile/get'
+    user_token = current_user.token
+    print(user_token)
+
+    base_url = 'http://127.0.0.1:5000/api/profile/get/'
+    prof_url = base_url + user_token
+    print(prof_url)
 
     prof_response = urllib.request.urlopen(prof_url)
     prof_data = prof_response.read()

@@ -13,8 +13,7 @@
                     </div> 
                     <div class="media-body mb-5 text-white"> 
                         <h4 class="mt-0 mb-0">{{ display_name }}</h4> 
-                        <p class="small mb-4"> 
-                        <i class="fas fa-map-marker-alt mr-2"></i></p> 
+                        <a class="btn btn-link text-muted text-decoration-none" href="{{ url_for('api.update_profile') }}">Update Profile</a> 
                     </div> 
                 </div> 
             </div> 
@@ -36,8 +35,7 @@
                     </div> 
                     <div class="py-4 px-4"> 
                         <div class="d-flex align-items-center justify-content-between mb-3"> 
-                            <h5 class="mb-0 text-muted">Recent photos</h5>
-                            <a href="#" class="btn btn-link text-muted">Show all</a> 
+                            <h5 class="mb-0 text-muted">Recent photos</h5> 
                         </div> 
                         <div class="row"> 
                             <div class="col-lg-6 mb-2 pr-lg-1">

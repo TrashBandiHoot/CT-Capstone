@@ -58,14 +58,16 @@ class Profile(db.Model):
     phone_number = db.Column(db.String, nullable = False)
     location = db.Column(db.String, nullable = False)
     hobbies = db.Column(db.String, nullable = False)
+    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self, display_name, profession, phone_number, location, hobbies):
+    def __init__(self, display_name, profession, phone_number, location, hobbies, user_token, id = ''):
         self.id = self.set_id()
         self.display_name = display_name
         self.profession = profession
         self.phone_number = phone_number
         self.location = location
         self.hobbies = hobbies
+        self.user_token = user_token
 
     def set_id(self):
         return (secrets.token_urlsafe())
@@ -75,8 +77,20 @@ class ProfileSchema(ma.Schema):
     class Meta:
         fields = ['display_name', 'profession', 'phone_number', 'location', 'hobbies']
 
+
 profile_schema = ProfileSchema()
 profile_schemas = ProfileSchema(many = True)
 
+class UserBooks(db.Model):
+    id = db.Column(db.String, primary_key = True)
+    book_id = db.column(db.String, nullable = False)
+    user_token = db.column(db.String, db.ForeignKey('user.token'), nullable = False)
+    
+    def __init__(self, book_id, user_token, id = ''):
+        self.id = self.set_id()
+        self.book_id = book_id
+        self.user_token = user_token
 
+    def set_id(self):
+        return (secrets.token_urlsafe())
 

@@ -26,7 +26,7 @@ def signup():
 
 
             flash(f'You have successfully created a user account {email}', 'User-created')
-            return redirect(url_for('site.home'))
+            return redirect(url_for('auth.signin'))
     except:
         raise Exception('Invalid form data: Please check your form')
     return render_template('sign_up.html', form=form)
@@ -50,7 +50,7 @@ def signin():
                 login_user(logged_user)
                 flash('You were successful in your initiation. Congratulations, Entrant. Welcome to the Jedi Knights', 'auth-sucess')
                 print("if")
-                return redirect(url_for('site.profile'))
+                return redirect(url_for('api.add_profile'))
             else:
                 print("else")
                 flash('You have failed in your attempt to access this content. Must be 99 or older to enter this website', 'auth-failed')
