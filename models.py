@@ -81,16 +81,16 @@ class ProfileSchema(ma.Schema):
 profile_schema = ProfileSchema()
 profile_schemas = ProfileSchema(many = True)
 
-class UserBooks(db.Model):
-    id = db.Column(db.String, primary_key = True)
-    book_id = db.column(db.String, nullable = False)
-    user_token = db.column(db.String, db.ForeignKey('user.token'), nullable = False)
+# class UserBooks(db.Model):
+#     id = db.Column(db.String, primary_key = True)
+#     book_id = db.column(db.String, nullable = False)
+#     user_token = db.column(db.String, db.ForeignKey('user.token'), nullable = False)
     
-    def __init__(self, book_id, user_token, id = ''):
-        self.id = self.set_id()
-        self.book_id = book_id
-        self.user_token = user_token
+#     def __init__(self, book_id, user_token, id = ''):
+#         self.id = self.set_id()
+#         self.book_id = book_id
+#         self.user_token = user_token
 
-    def set_id(self):
-        return (secrets.token_urlsafe())
+#     def set_id(self):
+#         return (secrets.token_urlsafe())
 
