@@ -52,7 +52,9 @@ def update_profile():
     form = UserProfileForm()
     try:
         if form.validate_on_submit():
-            profile = Profile.query.get('21JQeuJZSUXxgpCwlzVCkEDPg-59QAri_M2ekHTmq2Q')
+            user_profile = Profile.query.filter_by(user_token = current_user.token).first().__dict__
+            profile_id = user_profile['id']
+            profile = Profile.query.filter_by(id = profile_id).first()
             profile.display_name = form.display_name.data
             profile.profession = form.profession.data
             profile.phone_number = form.phone_number.data
