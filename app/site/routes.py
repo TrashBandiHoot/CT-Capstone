@@ -31,7 +31,7 @@ def profile():
     user_token = current_user.token
     print(user_token)
 
-    base_url = 'http://127.0.0.1:5000/api/profile/get/'
+    base_url = 'https://coding-temple-capstone.herokuapp.com/api/profile/get/'
     prof_url = base_url + user_token
     print(prof_url)
 

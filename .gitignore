@@ -3,3 +3,4 @@ TEST.html
 __pycache__
 migrations
 .env
+app.db
