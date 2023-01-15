@@ -12,7 +12,7 @@ class UserSignupForm(FlaskForm):
 
 class UserLoginForm(FlaskForm):
     email = StringField("Email", validators = [DataRequired()])
-    password = StringField("Password", validators = [DataRequired()])
+    password = PasswordField("Password", validators = [DataRequired()])
     submit_button = SubmitField()
 
 class UserProfileForm(FlaskForm):
@@ -22,3 +22,9 @@ class UserProfileForm(FlaskForm):
     location = StringField('Location', validators = [DataRequired()])
     hobbies = StringField('Hobbies', validators = [DataRequired()])
     submit_button = SubmitField()
+
+
+# class AddBookForm(FlaskForm):
+    # id = StringField('ID', validators=[DataRequired()])
+    # book_id = StringField('Book ID', validators=[DataRequired()])
+    # user_token = StringField('User Token', validators=[DataRequired()], default=lambda: current_user.token)

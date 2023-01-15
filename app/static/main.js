@@ -18,12 +18,23 @@ document.getElementById('enter').onclick = function(){
         for(i=0; i<10; i++){
 
             var booki = 'book'+(i+1)
+            var itemi = 'item'+(i+1)
 
             //create rows
             //images row
             var imgRow = document.createElement('div')
             imgRow.className = "row imgRow"
             document.getElementById(booki).appendChild(imgRow)
+
+
+
+
+            // var add_book = document.createElement('div')
+            // add_book.className = "add_book_button"
+            // document.getElementById(itemi).appendChild(add_book)
+
+
+
 
             //title and price row
             var titlePriceRow = document.createElement('div')
@@ -47,8 +58,19 @@ document.getElementById('enter').onclick = function(){
                 authorDiv.className = "col-md-12 author"
                 authorRow.appendChild(authorDiv)
 
+
+
+                // ! GET BOOK ID TO DISPLAY
+                
+
+                var add_book = document.createElement('div') // is a node
+                add_book.className = "add_book"
+                document.getElementById(booki).appendChild(add_book)
+
                 document.getElementById(booki).appendChild(authorRow)
 
+
+                
             //description row
             var descriptionRow = document.createElement('div')
             descriptionRow.className = "row descriptionRow"
@@ -64,6 +86,17 @@ document.getElementById('enter').onclick = function(){
             var img = document.createElement('img')
             img.src = data.items[i].volumeInfo.imageLinks.smallThumbnail
             document.getElementsByClassName('imgRow')[i].appendChild(img)
+
+
+
+            // id for add image button
+            var book_id = document.createElement('button')
+            book_id.setAttribute('type', 'button')
+            book_id.setAttribute('value', '{{ current_user.token }}')
+            book_id.innerHTML = data.items[i].id
+            document.getElementsByClassName('add_book')[i].appendChild(book_id)
+
+
 
             //title data
             var title = document.createElement('h1')
@@ -110,6 +143,7 @@ function clearPrevious(){
 
         //description row
         removeElementsByClass('descriptionRow')
+
   
     }//end for loop
 }//end clearPrevious function
@@ -120,3 +154,5 @@ function removeElementsByClass(className){
         elements[0].parentNode.removeChild(elements[0]);
     }
 }};
+
+

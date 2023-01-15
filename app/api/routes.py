@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, session
 from helpers import token_required
-from models import db, Profile, profile_schema, profile_schemas
+from models import db, Profile, profile_schema, profile_schemas, UserBooks
 from forms import UserProfileForm
 from flask_login import current_user
 import json
@@ -73,11 +73,23 @@ def update_profile():
 
 
 
-@api.route('/bookshelf', methods = ['GET'])
-def bookeshelf():
-    GOOGLE_API_KEY = 'AIzaSyCppHP28ImIhpv1NyWME0u_78XkhNKp2iM'
+# id is book ID user_token will be hard coded
+@api.route('/addbook/<id>', methods = ['POST'])
+def addbook(id):
+    token = '6cb18f60ae70938f564f3552c8b6bf33919db50c97a0f8c0'
 
+    book = UserBooks(book_id=id, user_token=token)
 
+    db.session.add(book)
+    db.session.commit()
+    return render_template('externalapi.html')
+
+@api.route('/deletebook/<id>', methods=['DELETE'])
+def deletebook(id):
+    book = UserBooks.query.get(id)
+    db.session.delete(book)
+    db.session.commit()
+    
 
 
 

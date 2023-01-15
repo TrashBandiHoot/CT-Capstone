@@ -3,7 +3,7 @@ import urllib.request, json
 import psycopg2
 from forms import UserProfileForm
 from flask_login import current_user
-from models import db, User, Profile, profile_schema
+from models import db, User, Profile, profile_schema, UserBooks
 
 
 site = Blueprint('site', __name__, template_folder = 'site_templates')
@@ -14,7 +14,8 @@ def home():
 
 @site.route('/eapi')
 def eapi():
-    return render_template('externalapi.html')
+    books = UserBooks.query.all()
+    return render_template('externalapi.html', books = books)
 
 # Pull data from local api and third party api to display on profile page
 
