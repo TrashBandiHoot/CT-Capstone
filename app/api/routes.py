@@ -100,8 +100,8 @@ def deletebook(id):
     book_dump = book_schema.dump(book_response)
     db.session.delete(book)
     db.session.commit()
-    response = book_schema.dump(book_dump)
-    return jsonify(response)
+    
+    return redirect(url_for('site.eapi'))
 
     
 
