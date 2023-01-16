@@ -101,3 +101,6 @@ class UserBooks(db.Model):
 class BookSchema(ma.Schema):
     class Meta:
         fields = ['id', 'book_id', 'title', 'imgurl', 'user_token']
+
+book_schema = BookSchema()
+books_schema = BookSchema(many = True)

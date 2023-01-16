@@ -37,3 +37,11 @@
     border-radius: 25px;
 	background-color: rgba(211, 211, 211, 0.5);
 }
+
+.delete_button {
+	border: 1px solid black;
+}
+
+.delete_button:hover {
+	background-color: red;
+}

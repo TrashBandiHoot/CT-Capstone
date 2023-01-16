@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, session
 from helpers import token_required
-from models import db, Profile, profile_schema, profile_schemas, UserBooks, BookSchema
+from models import db, Profile, profile_schema, profile_schemas, UserBooks, book_schema
 from forms import UserProfileForm
 from flask_login import current_user
 import json, urllib.request
@@ -91,14 +91,16 @@ def addbook(id):
     db.session.commit()
     return redirect(url_for('site.eapi'))
 
-@api.route('/deletebook/<id>', methods=['DELETE'])
+
+# DELETE function, HTML forms only allow get and post
+@api.route('/deletebook/<id>', methods=['POST'])
 def deletebook(id):
-    id = str(id)
     book = UserBooks.query.filter_by(book_id = id).first()
-    print(book)
+    book_response = UserBooks.query.get(id)
+    book_dump = book_schema.dump(book_response)
     db.session.delete(book)
     db.session.commit()
-    response = BookSchema.dump(book)
+    response = book_schema.dump(book_dump)
     return jsonify(response)
 
     

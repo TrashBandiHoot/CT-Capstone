@@ -28,7 +28,11 @@
                   <img src="{{ book.imgurl }}" alt="">
                   <br>
                   {{ book.title }}
-               </div>
+                  <br>
+                  <form action="post">
+                  <input class="delete_button btn" type="submit" name="DELETE" value="DELETE" href="{{ url_for('api.deletebook', id = book.book_id) }}">
+                  </form>
+                </div>
                {% endfor %}
               </div>
             </div>
