@@ -21,13 +21,13 @@
               <button class = "btn" id='enter'>Enter</button>
             </div>
             <!-- BOOKSHELF -->
-            <p>{{ current_user.token }}</p>
             <div class="container">
               <div class="row">
                {% for book in books %}
                <div class="col-sm">
-                  {{ book.id }}
-                  {{ book.book_id }}
+                  <img src="{{ book.imgurl }}" alt="">
+                  <br>
+                  {{ book.title }}
                </div>
                {% endfor %}
               </div>

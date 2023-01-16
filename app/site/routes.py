@@ -45,6 +45,7 @@ def profile():
     location = prof_dict['location']
     hobbies = prof_dict['hobbies']
 
+    
     return render_template('profile.html', quote=quote, author=author, display_name=display_name, profession=profession, phone_number=phone_number, location=location, hobbies=hobbies)
 
 

@@ -29,11 +29,6 @@ document.getElementById('enter').onclick = function(){
 
 
 
-            // var add_book = document.createElement('div')
-            // add_book.className = "add_book_button"
-            // document.getElementById(itemi).appendChild(add_book)
-
-
 
 
             //title and price row
@@ -60,11 +55,12 @@ document.getElementById('enter').onclick = function(){
 
 
 
-                // ! GET BOOK ID TO DISPLAY
                 
-
-                var add_book = document.createElement('div') // is a node
+                var add_book = document.createElement('form') // is a node
                 add_book.className = "add_book"
+                book_id = data.items[i].id
+                add_book.action = 'http://127.0.0.1:5000/api/addbook/' + book_id
+                add_book.method = 'POST'
                 document.getElementById(booki).appendChild(add_book)
 
                 document.getElementById(booki).appendChild(authorRow)
@@ -89,12 +85,12 @@ document.getElementById('enter').onclick = function(){
 
 
 
-            // id for add image button
-            var book_id = document.createElement('button')
-            book_id.setAttribute('type', 'button')
-            book_id.setAttribute('value', '{{ current_user.token }}')
-            book_id.innerHTML = data.items[i].id
-            document.getElementsByClassName('add_book')[i].appendChild(book_id)
+            // id for add book button
+            var book_button = document.createElement('button')
+            book_button.setAttribute('type', 'submit')
+            book_button.setAttribute('value', data.items[i].id)
+            book_button.innerHTML = 'Add Book'
+            document.getElementsByClassName('add_book')[i].appendChild(book_button)
 
 
 
@@ -143,6 +139,9 @@ function clearPrevious(){
 
         //description row
         removeElementsByClass('descriptionRow')
+
+        //add book button
+        removeElementsByClass('add_book')
 
   
     }//end for loop

@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, session
 from helpers import token_required
-from models import db, Profile, profile_schema, profile_schemas, UserBooks
+from models import db, Profile, profile_schema, profile_schemas, UserBooks, BookSchema
 from forms import UserProfileForm
 from flask_login import current_user
-import json
+import json, urllib.request
 
 api = Blueprint('api',__name__, url_prefix='/api')
 
@@ -76,19 +76,31 @@ def update_profile():
 # id is book ID user_token will be hard coded
 @api.route('/addbook/<id>', methods = ['POST'])
 def addbook(id):
-    token = '6cb18f60ae70938f564f3552c8b6bf33919db50c97a0f8c0'
+    base_url = 'https://www.googleapis.com/books/v1/volumes/'
+    target_url = base_url + id
 
-    book = UserBooks(book_id=id, user_token=token)
+    response = urllib.request.urlopen(target_url)
+    data = response.read()
+    dict = json.loads(data)
+    token = '1e267e224df941eba6bcacc7809a3ee550d021e9b6113cbe'
+    title = dict['volumeInfo']['title']
+    imgurl = dict['volumeInfo']['imageLinks']['smallThumbnail']
+    book = UserBooks(book_id=id, title=title, imgurl=imgurl, user_token=token)
 
     db.session.add(book)
     db.session.commit()
-    return render_template('externalapi.html')
+    return redirect(url_for('site.eapi'))
 
 @api.route('/deletebook/<id>', methods=['DELETE'])
 def deletebook(id):
-    book = UserBooks.query.get(id)
+    id = str(id)
+    book = UserBooks.query.filter_by(book_id = id).first()
+    print(book)
     db.session.delete(book)
     db.session.commit()
+    response = BookSchema.dump(book)
+    return jsonify(response)
+
     
 
 
