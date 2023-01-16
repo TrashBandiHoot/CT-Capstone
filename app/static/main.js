@@ -59,7 +59,7 @@ document.getElementById('enter').onclick = function(){
                 var add_book = document.createElement('form') // is a node
                 add_book.className = "add_book"
                 book_id = data.items[i].id
-                add_book.action = 'http://127.0.0.1:5000/api/addbook/' + book_id
+                add_book.action = 'https://coding-temple-capstone.herokuapp.com/api/addbook/' + book_id
                 add_book.method = 'POST'
                 document.getElementById(booki).appendChild(add_book)
 
