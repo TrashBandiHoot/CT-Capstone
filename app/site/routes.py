@@ -12,6 +12,7 @@ site = Blueprint('site', __name__, template_folder = 'site_templates')
 def home():
     return render_template('index.html')
 
+# Route for BookShelf page
 @site.route('/eapi')
 def eapi():
     books = UserBooks.query.all()

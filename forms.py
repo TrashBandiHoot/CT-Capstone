@@ -23,7 +23,7 @@ class UserProfileForm(FlaskForm):
     hobbies = StringField('Hobbies', validators = [DataRequired()])
     submit_button = SubmitField()
 
-
+#! Didn't use this, still want to try it
 # class AddBookForm(FlaskForm):
     # id = StringField('ID', validators=[DataRequired()])
     # book_id = StringField('Book ID', validators=[DataRequired()])

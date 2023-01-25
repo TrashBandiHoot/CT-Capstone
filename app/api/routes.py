@@ -8,7 +8,7 @@ import json, urllib.request
 api = Blueprint('api',__name__, url_prefix='/api')
 
 
-
+# This was an experiment, doesn't need to be done with a try/except
 @api.route('/addprofile', methods = ['GET', 'POST'])
 def add_profile():
     form = UserProfileForm()
@@ -34,7 +34,7 @@ def add_profile():
         raise Exception('Invalid form data: Please check your form')
     return render_template('addprofile.html', form=form)
 
-
+# Get route for profile data display
 @api.route('/profile/get/<token>', methods = ['GET'])
 def get_profile(token):
     print(token, 'here')
